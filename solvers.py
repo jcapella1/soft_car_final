@@ -1,7 +1,22 @@
+'''
+Several different possible solving algorithms for any given board state
+'''
 import copy
 from framework import Board, group_chk
 
+
 def brute_force(board):
+    '''
+    This method will test every possible swap on the board (with no playthrough,
+    i.e., only considering the results of the swap itself) and return the pair
+    with the highest score
+
+    Inputs:
+        board (Board): the board in the state to be tested
+
+    Returns:
+        pair (tuple): the pair of coordinates with the highest score
+    '''
     # Store the state of the grid when the function is run
     starting_grid = copy.deepcopy(board.grid)
     starting_score = board.score
@@ -17,9 +32,14 @@ def brute_force(board):
 
             # If the score increases, a match was made
             if board.score > starting_score:
+
+                # If this yields a higher score than the current highest,
+                # update the outputs accordingly
                 if board.score - starting_score > highest:
                     highest = board.score - starting_score
                     pair = ((i, j), (i, j + 1))
+
+                # Clear the board and reset the score
                 board.grid = copy.deepcopy(starting_grid)
                 board.score = starting_score
                 continue
@@ -34,9 +54,11 @@ def brute_force(board):
             board.swap2_no_replacement((i, j), (i + 1, j))
 
             if board.score > starting_score:
+
                 if board.score - starting_score > highest:
                     highest = board.score - starting_score
                     pair = ((i, j), (i + 1, j))
+
                 board.grid = copy.deepcopy(starting_grid)
                 board.score = starting_score
                 continue
@@ -44,10 +66,23 @@ def brute_force(board):
             board.grid = copy.deepcopy(starting_grid)
             board.score = starting_score
 
-    # Return highest pair
+    # Return the highest pair
     return pair
 
 def empirical(board, loops=1):
+    '''
+    This method will try every swap on the board with simulated playthrough.
+    The optional loops parameter allows this to be done many times, selecting
+    the pair that is the highest scorer with the greatest frequency
+
+    Inputs:
+        board (Board): the current board state
+        loops (int): the number of times to simulate playthrough
+
+    Returns:
+        pair (tuple): the highest scoring pair over the given number of loops
+    '''
+    # Store the pair frequencies in a dictionary
     frequencies = {}
 
     for i in range(loops):
@@ -99,5 +134,5 @@ def empirical(board, loops=1):
         else:
             frequencies[pair] = 1
 
+    # Return the dictionary item with the most tallies
     return max(frequencies, key=frequencies.get)
-
