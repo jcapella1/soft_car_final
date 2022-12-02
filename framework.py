@@ -18,7 +18,7 @@ class Board:
 
     After initializing, boards can swap items and check for matches
      '''
-    def __init__(self, size=5, colors=["r", "g", "b", "y"]):
+    def __init__(self, size=5, colors=["r", "g", "b", "y"], grid=None):
         '''
         Initialize the board by randomly populating it and then clearing any matches
         that may appear
@@ -137,6 +137,44 @@ class Board:
             # Refill columns from the top with random pieces
             for i in coords:
                 self.grid[int(i[0])].insert(0, random.choice(self.colors))
+    
+    def match_no_replacement(self):
+        
+        # Initialize list of coordinates to remove
+        coords = []
+
+        # Select columns
+        for i in range(self.size):
+            column = self.grid[i]
+
+            # Check for matches
+            if group_chk(column) is not None:
+                grps = group_chk(column).split("s")
+
+                # Score each match based on how many pieces it contains
+                for j in grps[:-1]:
+                    self.score += 2 * len(j) - 5
+
+                    # Add each coordinate to the list to clear
+                    for k in list(j):
+                        coords.append((i, k))
+
+
+        # Repeat for rows
+        for i in range(self.size):
+            row = [self.grid[j][i] for j in range(self.size)]
+
+            if group_chk(row) is not None:
+                grps = group_chk(row).split("s")
+
+                for k in grps[:-1]:
+                    self.score += 2 * len(k) - 5
+
+                    for l in list(k):
+                        # If two matches intersect, add additional points
+                        if (l, i) in coords:
+                            self.score += 2
+                            continue
 
     def swap(self, pos1, pos2):
         '''
@@ -194,6 +232,28 @@ class Board:
 
         # Check for matches
         self.match()
+
+    def swap2_no_replacement(self, pos1, pos2):
+        '''
+        Swap two items in the grid and check for matches. This version of the function does NOT use
+        the matches_exist() function in order to avoid infinite looping
+
+        Inputs:
+            pos1 (tuple): the coordinate of the first item to swap
+            pos1 (tuple): the coordinate of the second item to swap
+
+        Returns:
+            None
+        '''
+        # Swap the items
+        item1 = self.grid[pos1[0]][pos1[1]]
+        item2 = self.grid[pos2[0]][pos2[1]]
+
+        self.grid[pos1[0]][pos1[1]] = item2
+        self.grid[pos2[0]][pos2[1]] = item1
+
+        # Check for matches
+        self.match_no_replacement()
 
     def shuffle(self):
         '''
