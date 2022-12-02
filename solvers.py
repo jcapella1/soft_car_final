@@ -2,7 +2,7 @@
 Several different possible solving algorithms for any given board state
 '''
 import copy
-from framework import Board, group_chk
+from framework import *
 
 
 def brute_force(board):

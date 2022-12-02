@@ -18,7 +18,7 @@ class Board:
 
     After initializing, boards can swap items and check for matches
      '''
-    def __init__(self, size=5, colors=["r", "g", "b", "y"], grid=None):
+    def __init__(self, size=5, colors=["r", "g", "b", "y"]):
         '''
         Initialize the board by randomly populating it and then clearing any matches
         that may appear
