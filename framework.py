@@ -137,9 +137,18 @@ class Board:
             # Refill columns from the top with random pieces
             for i in coords:
                 self.grid[int(i[0])].insert(0, random.choice(self.colors))
-    
+
     def match_no_replacement(self):
-        
+        '''
+        The same as the match function, but does not refill the board in
+        order to facilitate the solver functions
+
+        Inputs:
+            None
+
+        Returns:
+            None
+        '''
         # Initialize list of coordinates to remove
         coords = []
 
@@ -158,7 +167,6 @@ class Board:
                     # Add each coordinate to the list to clear
                     for k in list(j):
                         coords.append((i, k))
-
 
         # Repeat for rows
         for i in range(self.size):
