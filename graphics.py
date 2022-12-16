@@ -355,7 +355,7 @@ class Board(pygame.sprite.RenderUpdates):
         return False
 
 
-def main(turns=10):
+def main(size=7, turns=10):
     '''
     The script that will run the game
 
@@ -367,7 +367,7 @@ def main(turns=10):
         None
     '''
     # Initialize a board object
-    board = Board()
+    board = Board(size=size)
 
     # Initialize the display based on the board size selected
     pygame.init()
