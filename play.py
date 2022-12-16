@@ -14,4 +14,3 @@ if __name__ == "__main__":
     TURNS = 10
 
     graphics.main(size=SIZE, turns=TURNS)
-    
