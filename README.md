@@ -13,7 +13,7 @@ pip install pygame
 
 ## Usage
 
-After cloning the repository, navigate to the project directory and run game.py
+After cloning the repository, navigate to the project directory and run play.py
 ```bash
 python3 game.py
 ```
