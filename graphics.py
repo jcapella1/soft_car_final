@@ -55,8 +55,6 @@ class Jewel(pygame.sprite.Sprite):
         }
         return files[self.color]
 
-
-
 class Board(pygame.sprite.RenderUpdates):
     '''
     A modified version of the board class from the framework.py file. Here, the class
@@ -347,6 +345,27 @@ class Board(pygame.sprite.RenderUpdates):
         # If nothing was found, return False
         return False
 
+class Selector(pygame.sprite.Sprite):
+    '''
+    A class which will represent the currently selected jewel
+    '''
+    def __init__(self, center=(0, 0)):
+        '''
+        Initialize the selector at a certain position on the board
+
+        Inputs:
+            center (tuple): the coordinates (in pixels) of the
+                center of the selector
+        Returns:
+            None
+        '''
+        # Initialize as a pygame sprite
+        pygame.sprite.Sprite.__init__(self)
+
+        # Update the color, image, and position
+        self.image = pygame.image.load("jewels/outline.png")
+        self.rect = self.image.get_rect()
+        self.rect.center = center
 
 def main(size=7, turns=10):
     '''
@@ -406,6 +425,9 @@ def main(size=7, turns=10):
 
                 # When the mouse is pressed, get its position
                 elif event.type == pygame.MOUSEBUTTONDOWN:
+                    # Save the score
+                    original_score = board.score
+
                     # Map the i coordinate to a jewel
                     i = 0
                     x_click = event.__dict__["pos"][0]
@@ -434,13 +456,16 @@ def main(size=7, turns=10):
                             # Swap the two if yes
                             board.swap(pos, (i, j))
 
-                            # Clear the current position and increment turns by one
+                            if original_score < board.score:
+                                # Increment turns if a scoring move was made
+                                count += 1
+
                             pos = None
-                            count += 1
 
                         else:
                             # If not a neighbor, update position
                             pos = (i, j)
+                            board.update()
 
             # Clear the screen
             screen.fill((0, 0, 0))
@@ -460,6 +485,12 @@ def main(size=7, turns=10):
             turns_rect.top = 5 + 50 * board.size
             turns_rect.right = 50 * board.size - 25
             screen.blit(turns_text, turns_rect)
+
+            # Display a selection indicator
+            if pos is not None:
+                center = (24 + 50 * pos[0], 24 + 50 * pos[1])
+                selector = Selector(center)
+                selector.add(board)
 
             # Refresh the display
             pygame.display.flip()
