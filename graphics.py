@@ -59,17 +59,10 @@ class Jewel(pygame.sprite.Sprite):
 
 class Board(pygame.sprite.RenderUpdates):
     '''
-    This allows for the generation of board objects. Boards are defined by the convention
-    self.grid[i][j], where directions are:
-     → i
-    ↓
-    j
-    (indexed starting at 0)
-
-    After initializing, boards can swap items and check for matches
-
-    This version of the board class is a subclass of the pygame RenderUpdates class,
-    which allows for easy display of all game objects
+    A modified version of the board class from the framework.py file. Here, the class
+    is a subclass of the built-in RenderUpdates class of PyGame, and the functions have
+    been modified specifically to interact with the graphical display every time the board
+    is modified
      '''
     def __init__(self, size=7, colors=["r", "g", "b", "y"]):
         '''
@@ -376,7 +369,7 @@ def main(size=7, turns=10):
     screen = pygame.display.set_mode(dimensions)
 
     # Initialize a font for displaying the score
-    font = pygame.font.Font('freesansbold.ttf', 32)
+    font = pygame.font.Font('freesansbold.ttf', 24)
 
     # Initialize the mouse position and the current number of turns
     pos = None
