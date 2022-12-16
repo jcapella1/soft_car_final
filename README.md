@@ -23,3 +23,4 @@ Accessing the simulations.ipynb notebook will show the performance of three diff
 
 ## Technologies Used
 - Pygame
+- Jupyter
