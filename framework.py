@@ -15,6 +15,7 @@ class Board:
      → i
     ↓
     j
+    (indexed starting at 0)
 
     After initializing, boards can swap items and check for matches
      '''
