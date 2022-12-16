@@ -1,7 +1,5 @@
-# soft_car_final
-Software Carpentry Final Project - Jonah Capella
-
 # Bejeweled (But Worse)
+Software Carpentry Final Project - Jonah Capella
 
 This repository contains the necessary files to run a version of Bejeweled written in Python, as well as a collection of solvers that were tested for performance against human data and one another
 
